@@ -7,12 +7,12 @@ import gmplot
 import plotly.graph_objects as go
 import numpy as np
 import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
 
 
 def heat_map():
 
     sensors_locations_df = pd.read_csv("./data/SensorsLocation.csv")
+    final_df = pd.read_csv("./data/finaldata.csv")
 
     # Store our latitude and longitude
     latitudes = sensors_locations_df["Latitude"]
@@ -25,7 +25,8 @@ def heat_map():
 
     # Overlay our datapoints onto the map
     gmap.heatmap(latitudes, longitudes, radius=2, opacity=1)
-    gmap.heatmap(longitudes, latitudes, radius=3, opacity=0.5)
+    gmap.heatmap([final_df["Latitude"].iloc[0]], [final_df["Longitude"].iloc[0]],
+                     radius= 20, opacity=1)
 
     # Generate the heatmap into an HTML file
     gmap.draw("tellus.html")
@@ -62,8 +63,9 @@ def bar_chart():
     plt.title('Programming language usage')
 
     plt.draw()
-    plt.waitforbuttonpress(0) # this will wait for indefinite time
+    plt.waitforbuttonpress(0)  # this will wait for indefinite time
     plt.close()
+
 
 def scatter_plot():
     # Example scatter plot with line joining each point
